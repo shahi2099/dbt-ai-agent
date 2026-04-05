@@ -1,0 +1,214 @@
+{
+  "agent_name": "dbt_agent_v2",
+  "system_prompt": [
+    "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"docs.getdbt.com-current\" by the full path to the GitHub repository: \"https://github.com/dbt-labs/docs.getdbt.com/blob/current/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance."
+  ],
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "tools": [
+    "text_search"
+  ],
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "What are incremental models in DBT, and how do they differ from traditional models?",
+          "timestamp": "2026-04-04T07:48:52.702253+00:00",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "timestamp": "2026-04-04T07:48:52.702870+00:00",
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"docs.getdbt.com-current\" by the full path to the GitHub repository: \"https://github.com/dbt-labs/docs.getdbt.com/blob/current/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request",
+      "run_id": "019d5777-595c-74c9-b9a4-aa8cccf16c62",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "args": "{\"query\":\"incremental models\"}",
+          "tool_call_id": "call_sdcwHwpdndyVBhPDi3VC6C83",
+          "id": null,
+          "provider_name": null,
+          "provider_details": null,
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "input_tokens": 237,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 16,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2026-04-04T07:48:54.625204+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_url": "https://api.openai.com/v1/",
+      "provider_details": {
+        "finish_reason": "tool_calls",
+        "timestamp": "2026-04-04T07:48:51+00:00"
+      },
+      "provider_response_id": "chatcmpl-DQq2N3Z0rqXrzBm17nFUFxfJ5SP5z",
+      "finish_reason": "tool_call",
+      "run_id": "019d5777-595c-74c9-b9a4-aa8cccf16c62",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "content": [
+            {
+              "start": 0,
+              "chunk": "import SnowflakeColumn from '/snippets/_snowflake-column-size.md';\n\n<SnowflakeColumn />\n\nIncremental models are built as tables in your <Term id=\"data-warehouse\" />. The first time a model is run, the <Term id=\"table\" /> is built by transforming _all_ rows of source data. On subsequent runs, dbt transforms _only_ the rows in your source data that you tell dbt to filter for, inserting them into the target table which is the table that has already been built.\n\nOften, the rows you filter for on an incremental run will be the rows in your source data that have been created or updated since the last time dbt ran. As such, on each dbt run, your model gets built incrementally.\n\nUsing an incremental model limits the amount of data that needs to be transformed, vastly reducing the runtime of your transformations. This improves warehouse performance and reduces compute costs.\n\n## Configure incremental materializations\n\nLike the other <Term id=\"materialization\">materializations</Term> built into dbt, incremental models are defined with `select` statements, with the materialization defined in a config block.\n```sql\n{{\n    config(\n        materialized='incremental'\n    )\n}}\n\nselect ...\n\n```\n\nTo use incremental models, you also need to tell dbt:\n\n- How to filter the rows on an incremental run\n- The unique key of the model (if any)\n\n### Understand the is_incremental() macro\n\nThe `is_incremental()` macro powers incremental materializations. It will return `True` if _all_ of the following conditions are met:\n\n- The model must already exist as a table in the database\n- The `full-refresh` flag _is not_ passed\n- The running model is configured with `materialized='incremental'`\n\nNote that the SQL in your model needs to be valid whether `is_incremental()` evaluates to `True` or `False`.\n\n### Filtering rows on an incremental run\n\nTo tell dbt which rows it should transform on an incremental run, wrap valid SQL that filters for these rows in the `is_incremental()` macro.\n\nOften, you'll want",
+              "title": "Configure incremental models",
+              "description": "Learn how to configure and optimize incremental models when developing in dbt.",
+              "id": "incremental-models",
+              "keywords": [
+                "incremental models",
+                "incremental materialization",
+                "incremental",
+                "materialization",
+                "incremental model",
+                "incremental strategy",
+                "incremental model configuration",
+                "incremental predicates"
+              ],
+              "intro_text": "Learn how to configure and optimize incremental models when developing in dbt.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/build/incremental-models.md"
+            },
+            {
+              "start": 6000,
+              "chunk": "e templated into your incremental model materialization in a way that's appropriate to your database.\n    \nWhen you pass a list in this way, please ensure that each column does not contain any nulls, or the incremental model run may fail.\n   \nAlternatively, you can define a single-column [surrogate key](https://www.getdbt.com/blog/guide-to-surrogate-key), for example with [`dbt_utils.generate_surrogate_key`](https://github.com/dbt-labs/dbt-utils#generate_surrogate_key-source).\n:::\n\nWhen you define a `unique_key`, you'll see this behavior for each row of \"new\" data returned by your dbt model:\n\n- If the same `unique_key` is present in the \"new\" and \"old\" model data, dbt will update/replace the old row with the new row of data. The exact mechanics of how that update/replace takes place will vary depending on your database, [incremental strategy](/docs/build/incremental-strategy), and [strategy specific configs](/docs/build/incremental-strategy#strategy-specific-configs).\n- If the `unique_key` is _not_ present in the \"old\" data, dbt will insert the entire row into the table.\n\nPlease note that if there's a unique_key with more than one row in either the existing target table or the new incremental rows, the incremental model may fail depending on your database and [incremental strategy](/docs/build/incremental-strategy). If you're having issues running an incremental model, it's a good idea to double check that the unique key is truly unique in both your existing database table and your new incremental rows. You can [learn more about surrogate keys here](https://www.getdbt.com/blog/guide-to-surrogate-key).\n\n:::info\nWhile common incremental strategies, such as `delete+insert` + `merge`, might use `unique_key`, others don't. For example, the `insert_overwrite` strategy does not use `unique_key`, because it operates on partitions of data rather than individual rows. For more information, see [About incremental_strategy](/docs/build/incremental-strategy).\n:::\n\n#### `unique_k",
+              "title": "Configure incremental models",
+              "description": "Learn how to configure and optimize incremental models when developing in dbt.",
+              "id": "incremental-models",
+              "keywords": [
+                "incremental models",
+                "incremental materialization",
+                "incremental",
+                "materialization",
+                "incremental model",
+                "incremental strategy",
+                "incremental model configuration",
+                "incremental predicates"
+              ],
+              "intro_text": "Learn how to configure and optimize incremental models when developing in dbt.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/build/incremental-models.md"
+            },
+            {
+              "start": 0,
+              "chunk": "Incremental models in dbt is a [materialization](/docs/build/materializations) strategy designed to efficiently update your data warehouse tables by only transforming and loading new or changed data since the last run. Instead of processing your entire dataset every time, incremental models append or update only the new rows, significantly reducing the time and resources required for your data transformations.\n\nThis page will provide you with a brief overview of incremental models, their importance in data transformations, and the core concepts of incremental materializations in dbt.\n\n<Lightbox src=\"/img/docs/building-a-dbt-project/incremental-diagram.jpg\" width=\"60%\" title=\"A visual representation of how incremental models work. Source: Materialization best practices guide (/best-practices/materializations/1-guide-overview)\" />\n\nimport CourseCallout from '/snippets/_materialization-video-callout.md';\n\n<CourseCallout resource=\"Incremental models\"\nurl=\"https://learn.getdbt.com/courses/incremental-models\"\ncourse=\"Incremental models\"\n/>\n\n## Understand incremental models\n\nIncremental models enable you to significantly reduce the build time by just transforming new records. This is particularly useful for large datasets, where the cost of processing the entire dataset is high.\n\nIncremental models [require extra configuration](/docs/build/incremental-models) and are an advanced usage of dbt. We recommend using them when your dbt runs are becoming too slow.\n\n### When to use an incremental model\n\nBuilding models as tables in your data warehouse is often preferred for better query performance. However, using `table` materialization can be computationally intensive, especially when:\n\n- Source data has millions or billions of rows.\n- Data transformations on the source data are computationally expensive (take a long time to execute) and complex, like when using Regex or UDFs.\n\nIncremental models offer a balance between complexity and improved performance compared to `view` and ",
+              "title": "About incremental models",
+              "description": "This is an introduction on incremental models, when to use them, and how they work in dbt.",
+              "id": "incremental-models-overview",
+              "intro_text": "This is an introduction on incremental models, when to use them, and how they work in dbt.",
+              "pagination_next": "docs/build/incremental-models",
+              "pagination_prev": null,
+              "filename": "docs.getdbt.com-current/website/docs/docs/build/incremental-models-overview.md"
+            },
+            {
+              "start": 9000,
+              "chunk": " a single day \u2013 one row for each time dbt runs on that day. Instead, the inclusion of the `unique_key` parameter ensures the existing row is updated instead.\n\n## How do I rebuild an incremental model?\nIf your incremental model logic has changed, the transformations on your new rows of data may diverge from the historical transformations, which are stored in your target table. In this case, you should rebuild your incremental model.\n\nTo force dbt to rebuild the entire incremental model from scratch, use the `--full-refresh` flag on the command line. This flag will cause dbt to drop the existing target table in the database before rebuilding it for all-time. \n\n```bash\n$ dbt run --full-refresh --select my_incremental_model+\n```\n\nThe trailing `+` in the command above will also run all downstream models that depend on `my_incremental_model`. If any of those downstream dependencies are also incremental models, they will be fully refreshed as well. \n\nYou can optionally use the [`full_refresh config`](/reference/resource-configs/full_refresh) to set a resource to always or never full-refresh at the project or resource level. If specified as true or false, the `full_refresh` config will take precedence over the presence or absence of the `--full-refresh` flag.\n\nFor detailed usage instructions, check out the [dbt run](/reference/commands/run) documentation. \n\n## What if the columns of my incremental model change?\n\nIncremental models can be configured to include an optional `on_schema_change` parameter to enable additional control when incremental model columns change. These options enable dbt to continue running incremental models in the presence of schema changes, resulting in fewer `--full-refresh` scenarios and saving query costs. \n\nYou can configure the `on_schema_change` setting as follows.\n\n<File name='dbt_project.yml'>\n\n```yaml\nmodels:\n  +on_schema_change: \"sync_all_columns\"\n```\n\n</File>\n\n<File name='models/staging/fct_daily_active_users.sql'>\n\n```sql\n{{\n    config(\n  ",
+              "title": "Configure incremental models",
+              "description": "Learn how to configure and optimize incremental models when developing in dbt.",
+              "id": "incremental-models",
+              "keywords": [
+                "incremental models",
+                "incremental materialization",
+                "incremental",
+                "materialization",
+                "incremental model",
+                "incremental strategy",
+                "incremental model configuration",
+                "incremental predicates"
+              ],
+              "intro_text": "Learn how to configure and optimize incremental models when developing in dbt.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/build/incremental-models.md"
+            },
+            {
+              "start": 7000,
+              "chunk": "key` is _not_ present in the \"old\" data, dbt will insert the entire row into the table.\n\nPlease note that if there's a unique_key with more than one row in either the existing target table or the new incremental rows, the incremental model may fail depending on your database and [incremental strategy](/docs/build/incremental-strategy). If you're having issues running an incremental model, it's a good idea to double check that the unique key is truly unique in both your existing database table and your new incremental rows. You can [learn more about surrogate keys here](https://www.getdbt.com/blog/guide-to-surrogate-key).\n\n:::info\nWhile common incremental strategies, such as `delete+insert` + `merge`, might use `unique_key`, others don't. For example, the `insert_overwrite` strategy does not use `unique_key`, because it operates on partitions of data rather than individual rows. For more information, see [About incremental_strategy](/docs/build/incremental-strategy).\n:::\n\n#### `unique_key` example\n\nConsider a model that calculates the number of daily active users (DAUs), based on an event stream. As source data arrives, you will want to recalculate the number of DAUs for both the day that dbt last ran, and any days since then. The model would look as follows:\n\n<File name='models/staging/fct_daily_active_users.sql'>\n\n```sql\n{{\n    config(\n        materialized='incremental',\n        unique_key='date_day'\n    )\n}}\n\nselect\n    date_trunc('day', event_at) as date_day,\n    count(distinct user_id) as daily_active_users\n\nfrom {{ ref('app_data_events') }}\n\n\n{% if is_incremental() %}\n\n  -- this filter will only be applied on an incremental run\n  -- (uses >= to include records arriving later on the same day as the last run of this model)\n  where date_day >= (select coalesce(max(date_day), '1900-01-01') from {{ this }})\n\n{% endif %}\n\ngroup by 1\n```\n\n</File>\n\nBuilding this model incrementally without the `unique_key` parameter would result in multiple rows in the target table for",
+              "title": "Configure incremental models",
+              "description": "Learn how to configure and optimize incremental models when developing in dbt.",
+              "id": "incremental-models",
+              "keywords": [
+                "incremental models",
+                "incremental materialization",
+                "incremental",
+                "materialization",
+                "incremental model",
+                "incremental strategy",
+                "incremental model configuration",
+                "incremental predicates"
+              ],
+              "intro_text": "Learn how to configure and optimize incremental models when developing in dbt.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/build/incremental-models.md"
+            }
+          ],
+          "tool_call_id": "call_sdcwHwpdndyVBhPDi3VC6C83",
+          "metadata": null,
+          "timestamp": "2026-04-04T07:48:54.644419+00:00",
+          "outcome": "success",
+          "part_kind": "tool-return"
+        }
+      ],
+      "timestamp": "2026-04-04T07:48:54.646102+00:00",
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"docs.getdbt.com-current\" by the full path to the GitHub repository: \"https://github.com/dbt-labs/docs.getdbt.com/blob/current/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request",
+      "run_id": "019d5777-595c-74c9-b9a4-aa8cccf16c62",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "content": "Incremental models in DBT are a specialized materialization strategy designed to optimize data processing by only transforming and loading new or updated data since the last run. This approach significantly improves performance and reduces resource usage compared to traditional models that rebuild the entire dataset every time they are executed.\n\n### Key Features of Incremental Models:\n1. **Initial Run vs. Subsequent Runs**:\n   - On the first run, incremental models process and build the entire dataset.\n   - On subsequent runs, they only handle rows that have changed or been added to the source data since the last run, which makes the process much faster.\n\n2. **Data Transformation Efficiency**:\n   - By limiting the amount of data that needs to be transformed, incremental models can drastically cut down on computation time and costs associated with large datasets (e.g., millions of rows) and complex transformations.\n\n3. **Configuration Requirements**:\n   - Incremental models require specific configurations, including how to filter new rows and a unique key for identifying records that need updates.\n   - The `is_incremental()` macro is used to differentiate when a model is running incrementally and to apply the appropriate filters for this context.\n\n4. **Repairing and Rebuilding**:\n   - If there are significant changes to the model logic or schema, you can rebuild the entire incremental model using the `--full-refresh` option in DBT, which will drop the existing table and create it from scratch.\n\n5. **Schema Changes**:\n   - Incremental models can be configured to handle changes in schema more gracefully with the `on_schema_change` parameter, which can prevent the need for full refreshes.\n\n### Comparison with Traditional Models:\n- **Traditional Models** (using `table` materialization) reprocess the entire dataset every time they are run, which can be time-consuming and resource-intensive.\n- **Incremental Models** only process new or modified data, allowing for much faster updates and lower resource use.\n\n### Example Usage:\nHere is a simplified example configuration for an incremental model:\n```sql\n{{ \n    config(\n        materialized='incremental',\n        unique_key='date_day'\n    ) \n}}\n\nselect\n    date_trunc('day', event_at) as date_day,\n    count(distinct user_id) as daily_active_users\nfrom {{ ref('app_data_events') }}\n{% if is_incremental() %}\n  where date_day >= (select coalesce(max(date_day), '1900-01-01') from {{ this }})\n{% endif %}\ngroup by 1\n```\nIn this example, during subsequent runs, the model only processes events that have occurred since the last run based on the `date_day`.\n\nFor more in-depth information, please refer to the following resources:  \n- [About incremental models](https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/docs/docs/build/incremental-models-overview.md)  \n- [Configure incremental models](https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/docs/docs/build/incremental-models.md)  ",
+          "id": null,
+          "provider_name": null,
+          "provider_details": null,
+          "part_kind": "text"
+        }
+      ],
+      "usage": {
+        "input_tokens": 3126,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 626,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2026-04-04T07:49:04.763698+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_url": "https://api.openai.com/v1/",
+      "provider_details": {
+        "finish_reason": "stop",
+        "timestamp": "2026-04-04T07:48:53+00:00"
+      },
+      "provider_response_id": "chatcmpl-DQq2PhK9JVrt5UFzQxICcrEqOQtr0",
+      "finish_reason": "stop",
+      "run_id": "019d5777-595c-74c9-b9a4-aa8cccf16c62",
+      "metadata": null
+    }
+  ],
+  "source": "ai-generated"
+}

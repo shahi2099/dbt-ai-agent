@@ -1,0 +1,169 @@
+{
+  "agent_name": "dbt_agent_v2",
+  "system_prompt": [
+    "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"docs.getdbt.com-current\" by the full path to the GitHub repository: \"https://github.com/dbt-labs/docs.getdbt.com/blob/current/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance."
+  ],
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "tools": [
+    "text_search"
+  ],
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "What is the purpose of enabling source data freshness snapshots in dbt?",
+          "timestamp": "2026-04-04T07:48:31.962751+00:00",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "timestamp": "2026-04-04T07:48:31.963956+00:00",
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"docs.getdbt.com-current\" by the full path to the GitHub repository: \"https://github.com/dbt-labs/docs.getdbt.com/blob/current/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request",
+      "run_id": "019d5777-0857-73e0-abde-9683020e97ae",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "args": "{\"query\":\"source data freshness snapshots dbt\"}",
+          "tool_call_id": "call_siJkxPpwvbwfXePgU1r76NVj",
+          "id": null,
+          "provider_name": null,
+          "provider_details": null,
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "input_tokens": 234,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 19,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2026-04-04T07:48:33.973565+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_url": "https://api.openai.com/v1/",
+      "provider_details": {
+        "finish_reason": "tool_calls",
+        "timestamp": "2026-04-04T07:48:31+00:00"
+      },
+      "provider_response_id": "chatcmpl-DQq23JTPWkrpSWaJt49N7TZcsOPqf",
+      "finish_reason": "tool_call",
+      "run_id": "019d5777-0857-73e0-abde-9683020e97ae",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "content": [
+            {
+              "start": 0,
+              "chunk": "<Constant name=\"dbt\" /> provides a helpful interface around dbt's [source data freshness](/docs/build/sources#source-data-freshness) calculations. When a <Constant name=\"dbt\" /> job is configured to snapshot source data freshness, <Constant name=\"dbt\" /> will render a user interface showing you the state of the most recent snapshot. This interface is intended to help you determine if your source data freshness is meeting the service level agreement (SLA) that you've defined for your organization.\n\n<Lightbox src=\"/img/docs/dbt-cloud/using-dbt-cloud/data-sources-next.png\" title=\"Data Sources in dbt\"/>\n\n### Enabling source freshness snapshots\n\n[`dbt build`](/reference/commands/build) does _not_ include source freshness checks when building and testing resources in your DAG. Instead, you can use one of these common patterns for defining jobs:\n- Add `dbt build` to the run step to run models, tests, and so on. \n- Select the **Generate docs on run** checkbox to automatically [generate project docs](/docs/explore/build-and-view-your-docs).\n- Select the **Run source freshness** checkbox to enable [source freshness](#checkbox) as the first step of the job. \n\n<Lightbox src=\"/img/docs/dbt-cloud/select-source-freshness.png\" title=\"Selecting source freshness\"/>\n\nTo enable source freshness snapshots, firstly make sure to configure your sources to [snapshot freshness information](/docs/build/sources#source-data-freshness). You can add source freshness to the list of commands in the job run steps or enable the checkbox. However, you can expect different outcomes when you configure a job by selecting the **Run source freshness** checkbox compared to adding the command to the run steps.\n\nReview the following options and outcomes:\n\n| Options | Outcomes |\n|--------| ------- |\n|  **Select checkbox <a id=\"checkbox\"></a>** | The **Run source freshness** checkbox in your **Execution Settings** will run `dbt source freshness` as the first step in your job and won't break subsequent steps if ",
+              "title": "Source freshness",
+              "id": "source-freshness",
+              "description": "Validate that data freshness meets expectations and alert if stale.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/deploy/source-freshness.md"
+            },
+            {
+              "start": 1000,
+              "chunk": " docs](/docs/explore/build-and-view-your-docs).\n- Select the **Run source freshness** checkbox to enable [source freshness](#checkbox) as the first step of the job. \n\n<Lightbox src=\"/img/docs/dbt-cloud/select-source-freshness.png\" title=\"Selecting source freshness\"/>\n\nTo enable source freshness snapshots, firstly make sure to configure your sources to [snapshot freshness information](/docs/build/sources#source-data-freshness). You can add source freshness to the list of commands in the job run steps or enable the checkbox. However, you can expect different outcomes when you configure a job by selecting the **Run source freshness** checkbox compared to adding the command to the run steps.\n\nReview the following options and outcomes:\n\n| Options | Outcomes |\n|--------| ------- |\n|  **Select checkbox <a id=\"checkbox\"></a>** | The **Run source freshness** checkbox in your **Execution Settings** will run `dbt source freshness` as the first step in your job and won't break subsequent steps if it fails. If you wanted your job dedicated *exclusively* to running freshness checks, you still need to include at least one placeholder step, such as `dbt compile`. |\n| **Add as a run step** | Add the `dbt source freshness` command to a job anywhere in your list of run steps. However, if your source data is out of date &mdash; this step will \"fail\", and subsequent steps will not run. <Constant name=\"dbt\" /> will trigger email notifications (if configured) based on the end state of this step. <br /><br /> You can create a new job to snapshot source freshness. <br /><br /> If you *do not* want your models to run if your source data is out of date, then it could be a good idea to run `dbt source freshness` as the first step in your job. Otherwise, we recommend adding `dbt source freshness` as the last step in the job, or creating a separate job just for this task.  |\n\n\n<Lightbox src=\"/img/docs/dbt-cloud/using-dbt-cloud/job-step-source-freshness.png\" title=\"Adding a step to snapshot sourc",
+              "title": "Source freshness",
+              "id": "source-freshness",
+              "description": "Validate that data freshness meets expectations and alert if stale.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/deploy/source-freshness.md"
+            },
+            {
+              "start": 2000,
+              "chunk": "it fails. If you wanted your job dedicated *exclusively* to running freshness checks, you still need to include at least one placeholder step, such as `dbt compile`. |\n| **Add as a run step** | Add the `dbt source freshness` command to a job anywhere in your list of run steps. However, if your source data is out of date &mdash; this step will \"fail\", and subsequent steps will not run. <Constant name=\"dbt\" /> will trigger email notifications (if configured) based on the end state of this step. <br /><br /> You can create a new job to snapshot source freshness. <br /><br /> If you *do not* want your models to run if your source data is out of date, then it could be a good idea to run `dbt source freshness` as the first step in your job. Otherwise, we recommend adding `dbt source freshness` as the last step in the job, or creating a separate job just for this task.  |\n\n\n<Lightbox src=\"/img/docs/dbt-cloud/using-dbt-cloud/job-step-source-freshness.png\" title=\"Adding a step to snapshot source freshness\"/>\n\n\n### Source freshness snapshot frequency\nIt's important that your freshness jobs run frequently enough to snapshot data latency in accordance with your SLAs. You can imagine that if you have a 1 hour SLA on a particular dataset, snapshotting the freshness of that <Term id=\"table\" /> once daily would not be appropriate. As a good rule of thumb, you should run your source freshness jobs with at least double the frequency of your lowest SLA.  Here's an example table of some reasonable snapshot frequencies given typical SLAs:\n\n| SLA | Snapshot Frequency |\n| --- | ------------------ |\n| 1 hour | 30 mins |\n| 1 day | 12 hours |\n| 1 week | About daily |\n\n## Further reading\n\n- Refer to [Artifacts](/docs/deploy/artifacts) for more info on how to create <Constant name=\"dbt\" /> artifacts, share links to the latest documentation, and share source freshness reports with your team.\n- Source freshness for Snowflake is calculated using the `LAST_ALTERED` column. Read about the limitatio",
+              "title": "Source freshness",
+              "id": "source-freshness",
+              "description": "Validate that data freshness meets expectations and alert if stale.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/deploy/source-freshness.md"
+            },
+            {
+              "start": 3000,
+              "chunk": "e freshness\"/>\n\n\n### Source freshness snapshot frequency\nIt's important that your freshness jobs run frequently enough to snapshot data latency in accordance with your SLAs. You can imagine that if you have a 1 hour SLA on a particular dataset, snapshotting the freshness of that <Term id=\"table\" /> once daily would not be appropriate. As a good rule of thumb, you should run your source freshness jobs with at least double the frequency of your lowest SLA.  Here's an example table of some reasonable snapshot frequencies given typical SLAs:\n\n| SLA | Snapshot Frequency |\n| --- | ------------------ |\n| 1 hour | 30 mins |\n| 1 day | 12 hours |\n| 1 week | About daily |\n\n## Further reading\n\n- Refer to [Artifacts](/docs/deploy/artifacts) for more info on how to create <Constant name=\"dbt\" /> artifacts, share links to the latest documentation, and share source freshness reports with your team.\n- Source freshness for Snowflake is calculated using the `LAST_ALTERED` column. Read about the limitations in [Snowflake configs](/reference/resource-configs/snowflake-configs#source-freshness-known-limitation).",
+              "title": "Source freshness",
+              "id": "source-freshness",
+              "description": "Validate that data freshness meets expectations and alert if stale.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/deploy/source-freshness.md"
+            },
+            {
+              "start": 6000,
+              "chunk": "t_field`, or viable alternative, is not provided, then dbt will not calculate freshness for the table.\n\nThese configs are applied hierarchically, so `freshness` and `loaded_at_field` values specified for a `source` will flow through to all of the `tables` defined in that source. This is useful when all of the tables in a source have the same `loaded_at_field`, as the config can just be specified once in the top-level source definition.\n\n### Checking source freshness\nTo obtain freshness information for your sources, use the `dbt source freshness` command ([reference docs](/reference/commands/source)):\n\n```\n$ dbt source freshness\n```\n\nBehind the scenes, dbt uses the freshness properties to construct a `select` query, shown below. You can find this query in the [query logs](/faqs/Runs/checking-logs).\n\n```sql\nselect\n  max(_etl_loaded_at) as max_loaded_at,\n  convert_timezone('UTC', current_timestamp()) as calculated_at\nfrom raw.jaffle_shop.orders\n\n```\n\nThe results of this query are used to determine whether the source is fresh or not:\n\n<Lightbox src=\"/img/docs/building-a-dbt-project/snapshot-freshness.png\" title=\"Uh oh! Not everything is as fresh as we'd like!\"/>\n\n### Build models based on source freshness\n\nOur best practice recommendation is to use [data source freshness](/docs/build/sources#declaring-source-freshness). This will allow settings to be transfered into a `.yml` file where source freshness is defined on [model level](/reference/resource-properties/freshness).\n\nTo build models based on source freshness in dbt:\n\n1. Run `dbt source freshness` to check the freshness of your sources.\n2. Use the `dbt build --select source_status:fresher+` command to build and test models downstream of fresher sources.\n\nUsing these commands in order makes sure models update with the latest data. This eliminates wasted compute cycles on unchanged data and builds models _only_ when necessary. \n\nSet [source freshness snapshots](/docs/deploy/source-freshness#enabling-source-freshness-",
+              "title": "Add sources to your DAG",
+              "sidebar_label": "Sources",
+              "description": "Define data source tables when developing in dbt.",
+              "id": "sources",
+              "search_weight": "heavy",
+              "filename": "docs.getdbt.com-current/website/docs/docs/build/sources.md"
+            }
+          ],
+          "tool_call_id": "call_siJkxPpwvbwfXePgU1r76NVj",
+          "metadata": null,
+          "timestamp": "2026-04-04T07:48:33.999132+00:00",
+          "outcome": "success",
+          "part_kind": "tool-return"
+        }
+      ],
+      "timestamp": "2026-04-04T07:48:34.000079+00:00",
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"docs.getdbt.com-current\" by the full path to the GitHub repository: \"https://github.com/dbt-labs/docs.getdbt.com/blob/current/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request",
+      "run_id": "019d5777-0857-73e0-abde-9683020e97ae",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "content": "Enabling source data freshness snapshots in dbt serves several purposes:\n\n1. **Monitoring Data Freshness**: By configuring snapshots for source data freshness, you have the ability to check whether your source data is up-to-date and meets the defined service level agreements (SLAs). The interface created by dbt will show the state of the most recent snapshot, allowing you to monitor if your data freshness is acceptable.\n\n2. **Job Configuration**: When creating jobs in dbt, the option to snapshot source freshness can be enabled as the first step. This ensures that freshness checks are conducted prior to other processes, enabling you to decide if downstream processes should run based on the freshness of the source data. If the source data is stale, it can prevent subsequent actions, thereby maintaining data integrity.\n\n3. **Frequency of Freshness Checks**: It is crucial to configure freshness jobs to run frequently enough to align with your SLA requirements. For instance, if your SLA is one hour, it's advised to run freshness checks at least every 30 minutes to effectively monitor data latency.\n\n4. **Better Resource Management**: By using source freshness snapshots, you can optimize resource usage in your dbt pipeline. Only building models when the source data is fresh eliminates unnecessary processing, thus saving on computational resources.\n\n5. **Alerting and Reporting**: If the source data is found to be stale, dbt can trigger alerts (if configured) to notify responsible parties, allowing for quick responses to data issues.\n\nIn summary, enabling source data freshness snapshots in dbt helps maintain high-quality data management practices by ensuring data is fresh, supporting informed decision-making based on data quality, and optimizing resource utilization in your data workflows ([Source freshness documentation](https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/docs/docs/deploy/source-freshness.md)).",
+          "id": null,
+          "provider_name": null,
+          "provider_details": null,
+          "part_kind": "text"
+        }
+      ],
+      "usage": {
+        "input_tokens": 2685,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 373,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2026-04-04T07:48:42.771253+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_url": "https://api.openai.com/v1/",
+      "provider_details": {
+        "finish_reason": "stop",
+        "timestamp": "2026-04-04T07:48:33+00:00"
+      },
+      "provider_response_id": "chatcmpl-DQq25oEkBvKfzvaIPCAVOA17G1SX5",
+      "finish_reason": "stop",
+      "run_id": "019d5777-0857-73e0-abde-9683020e97ae",
+      "metadata": null
+    }
+  ],
+  "source": "ai-generated"
+}

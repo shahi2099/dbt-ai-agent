@@ -1,0 +1,267 @@
+{
+  "agent_name": "dbt_agent_v2",
+  "system_prompt": [
+    "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"docs.getdbt.com-current\" by the full path to the GitHub repository: \"https://github.com/dbt-labs/docs.getdbt.com/blob/current/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance."
+  ],
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "tools": [
+    "text_search"
+  ],
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "What information does dbt track about each model build?",
+          "timestamp": "2026-04-04T07:47:53.583818+00:00",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "timestamp": "2026-04-04T07:47:53.584369+00:00",
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"docs.getdbt.com-current\" by the full path to the GitHub repository: \"https://github.com/dbt-labs/docs.getdbt.com/blob/current/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request",
+      "run_id": "019d5776-726e-7324-b44f-80f9faff65ed",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "args": "{\"query\":\"dbt track model build information\"}",
+          "tool_call_id": "call_6JsQ3Gc1yL5EBGnSudly4act",
+          "id": null,
+          "provider_name": null,
+          "provider_details": null,
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "input_tokens": 231,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 19,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2026-04-04T07:47:54.713978+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_url": "https://api.openai.com/v1/",
+      "provider_details": {
+        "finish_reason": "tool_calls",
+        "timestamp": "2026-04-04T07:47:52+00:00"
+      },
+      "provider_response_id": "chatcmpl-DQq1QUVjZNdMCi0an1NpVjqZPnfr8",
+      "finish_reason": "tool_call",
+      "run_id": "019d5776-726e-7324-b44f-80f9faff65ed",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "content": [
+            {
+              "start": 0,
+              "chunk": "Configure dbt to send email notifications to model owners about issues in deployment [environments](/docs/dbt-cloud-environments#types-of-environments) as soon as they happen &mdash; while the job is still running. Model owners can specify which statuses to receive notifications about:\n\n- **Success** and **Fails** for models\n- **Warning**, **Success**, and **Fails** for tests\n\nWith model-level notifications, model owners can be the first ones to know about issues before anyone else (like the stakeholders). \n\nTo be timely and keep the number of notifications to a reasonable amount when multiple models or tests trigger them, dbt observes the following guidelines when notifying the owners:  \n\n- Send a notification to each unique owner/email during a job run about any models (with status of failure/success) or tests (with status of warning/failure/success). Each owner receives only one notification, the initial one.\n- No notifications sent about subsequent models or tests while a dbt job is still running.\n- Each owner/user who subscribes to notifications for one or more statuses (like failure, success, warning) will receive only _one_ email notification at the end of the job run.\n- The email includes a consolidated list of all models or tests that match the statuses the user subscribed to, instead of sending separate emails for each status.\n\nCreate configuration YAML files in your project for dbt to send notifications about the status of your models and tests in your deployment environments.\n\n## Prerequisites\n- Your <Constant name=\"dbt\" /> administrator has [enabled the appropriate account setting](#enable-access-to-model-notifications) for you.\n- Your deployment environment(s) must be on a [release track](/docs/dbt-versions/cloud-release-tracks) instead of a legacy <Constant name=\"core\" /> version.\n\n## Configure groups\n\nDefine your [groups](/docs/build/groups) in any `.yml` file in your [models directory](/reference/project-configs/model-paths). Each group's owner can ",
+              "title": "Model notifications",
+              "description": "While a job is running, receive email notifications in real time about any issues with your models and tests. ",
+              "intro_text": "Set up dbt to notify model owners through email about issues in your deployment environments.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/deploy/model-notifications.md"
+            },
+            {
+              "start": 1000,
+              "chunk": "s still running.\n- Each owner/user who subscribes to notifications for one or more statuses (like failure, success, warning) will receive only _one_ email notification at the end of the job run.\n- The email includes a consolidated list of all models or tests that match the statuses the user subscribed to, instead of sending separate emails for each status.\n\nCreate configuration YAML files in your project for dbt to send notifications about the status of your models and tests in your deployment environments.\n\n## Prerequisites\n- Your <Constant name=\"dbt\" /> administrator has [enabled the appropriate account setting](#enable-access-to-model-notifications) for you.\n- Your deployment environment(s) must be on a [release track](/docs/dbt-versions/cloud-release-tracks) instead of a legacy <Constant name=\"core\" /> version.\n\n## Configure groups\n\nDefine your [groups](/docs/build/groups) in any `.yml` file in your [models directory](/reference/project-configs/model-paths). Each group's owner can now specify one or multiple email addresses to receive model-level notifications.\n\nThe `email` field supports a single email address as a string or a list of multiple email addresses.\n\nThe following example shows how to define groups in a `groups.yml` file.\n\n<File name='models/groups.yml'>\n\n```yml\n\ngroups:\n  - name: finance\n    owner:\n      # Email is required to receive model-level notifications, additional properties are also allowed.\n      name: \"Finance team\"\n      email: finance@dbtlabs.com\n\n  - name: marketing\n    owner:\n      name: \"Marketing team\"\n      email: marketing@dbtlabs.com\n    config:\n      meta:\n        slack: '#marketing-team'\n\n# Example of multiple emails supported\n  - name: documentation team\n    owner:\n      name: \"Docs team\"\n      email: \n        - docs@dbtlabs.com\n        - community@dbtlabs.com\n        - product@dbtlabs.com\n    config:\n      meta:\n        slack: '#docs-fox'\n\n```\n\n</File>\n\n:::tip\nThe `owner` field supports `name` and `email`, which are required ",
+              "title": "Model notifications",
+              "description": "While a job is running, receive email notifications in real time about any issues with your models and tests. ",
+              "intro_text": "Set up dbt to notify model owners through email about issues in your deployment environments.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/deploy/model-notifications.md"
+            },
+            {
+              "start": 4000,
+              "chunk": "\nname: \"jaffle_shop\"\n\n[...]\n\nmodels:\n  jaffle_shop:\n    staging:\n      +group: data_engineering\n    marts:\n      sales:\n        +group: finance\n      campaigns:\n        +group: marketing\n    \n```\n\n</File>\nAttaching a group to a model also encompasses its tests, so you will also receive notifications for a model's test failures. \n\n## Enable access to model notifications \n\nProvide <Constant name=\"dbt\" /> account members the ability to configure and receive alerts about issues with models or tests that are encountered during job runs.  \n\nTo use model-level notifications, your <Constant name=\"dbt\" /> account must have access to the feature. Ask your <Constant name=\"dbt\" /> administrator to enable this feature for account members by following these steps:\n\n1. Navigate to **Notification settings** from your profile name in the sidebar (lower left-hand side). \n2. From **Email notifications**, enable the setting **Enable group/owner notifications on models** under the **Model notifications** section. Then, specify which statuses to receive notifications about (Success, Warning, and/or Fails). \n3. Click **Save**.\n\n  <Lightbox src=\"/img/docs/dbt-cloud/example-enable-model-notifications.png\" title=\"Example of the setting Enable group/owner notifications on models\" />",
+              "title": "Model notifications",
+              "description": "While a job is running, receive email notifications in real time about any issues with your models and tests. ",
+              "intro_text": "Set up dbt to notify model owners through email about issues in your deployment environments.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/deploy/model-notifications.md"
+            },
+            {
+              "start": 3000,
+              "chunk": "values. \n\nAdditional arbitrary fields (such as `favorite_food`) are deprecated and will no longer be allowed in a future release.\n\nTo store additional metadata (like Slack channels, team info, or custom attributes), use `config.meta` instead.\n:::\n\n## Attach groups to models\n\nAttach groups to models as you would any other config, in either the `dbt_project.yml` or `whatever.yml` files. For example: \n\n<File name='models/marts.yml'>\n\n```yml\n\nmodels:\n  - name: sales\n    description: \"Sales data model\"\n    config:\n      group: finance\n\n  - name: campaigns\n    description: \"Campaigns data model\"\n    config:\n      group: marketing\n\n```\n</File>\n\nBy assigning groups in the `dbt_project.yml` file, you can capture all models in a subdirectory at once. \n\nIn this example, model notifications related to staging models go to the data engineering group, `marts/sales` models to the finance team, and `marts/campaigns` models to the marketing team.\n\n<File name='dbt_project.yml'>\n\n```yml\nconfig-version: 2\nname: \"jaffle_shop\"\n\n[...]\n\nmodels:\n  jaffle_shop:\n    staging:\n      +group: data_engineering\n    marts:\n      sales:\n        +group: finance\n      campaigns:\n        +group: marketing\n    \n```\n\n</File>\nAttaching a group to a model also encompasses its tests, so you will also receive notifications for a model's test failures. \n\n## Enable access to model notifications \n\nProvide <Constant name=\"dbt\" /> account members the ability to configure and receive alerts about issues with models or tests that are encountered during job runs.  \n\nTo use model-level notifications, your <Constant name=\"dbt\" /> account must have access to the feature. Ask your <Constant name=\"dbt\" /> administrator to enable this feature for account members by following these steps:\n\n1. Navigate to **Notification settings** from your profile name in the sidebar (lower left-hand side). \n2. From **Email notifications**, enable the setting **Enable group/owner notifications on models** under the **Model notifications** s",
+              "title": "Model notifications",
+              "description": "While a job is running, receive email notifications in real time about any issues with your models and tests. ",
+              "intro_text": "Set up dbt to notify model owners through email about issues in your deployment environments.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/deploy/model-notifications.md"
+            },
+            {
+              "start": 2000,
+              "chunk": "now specify one or multiple email addresses to receive model-level notifications.\n\nThe `email` field supports a single email address as a string or a list of multiple email addresses.\n\nThe following example shows how to define groups in a `groups.yml` file.\n\n<File name='models/groups.yml'>\n\n```yml\n\ngroups:\n  - name: finance\n    owner:\n      # Email is required to receive model-level notifications, additional properties are also allowed.\n      name: \"Finance team\"\n      email: finance@dbtlabs.com\n\n  - name: marketing\n    owner:\n      name: \"Marketing team\"\n      email: marketing@dbtlabs.com\n    config:\n      meta:\n        slack: '#marketing-team'\n\n# Example of multiple emails supported\n  - name: documentation team\n    owner:\n      name: \"Docs team\"\n      email: \n        - docs@dbtlabs.com\n        - community@dbtlabs.com\n        - product@dbtlabs.com\n    config:\n      meta:\n        slack: '#docs-fox'\n\n```\n\n</File>\n\n:::tip\nThe `owner` field supports `name` and `email`, which are required values. \n\nAdditional arbitrary fields (such as `favorite_food`) are deprecated and will no longer be allowed in a future release.\n\nTo store additional metadata (like Slack channels, team info, or custom attributes), use `config.meta` instead.\n:::\n\n## Attach groups to models\n\nAttach groups to models as you would any other config, in either the `dbt_project.yml` or `whatever.yml` files. For example: \n\n<File name='models/marts.yml'>\n\n```yml\n\nmodels:\n  - name: sales\n    description: \"Sales data model\"\n    config:\n      group: finance\n\n  - name: campaigns\n    description: \"Campaigns data model\"\n    config:\n      group: marketing\n\n```\n</File>\n\nBy assigning groups in the `dbt_project.yml` file, you can capture all models in a subdirectory at once. \n\nIn this example, model notifications related to staging models go to the data engineering group, `marts/sales` models to the finance team, and `marts/campaigns` models to the marketing team.\n\n<File name='dbt_project.yml'>\n\n```yml\nconfig-version: 2",
+              "title": "Model notifications",
+              "description": "While a job is running, receive email notifications in real time about any issues with your models and tests. ",
+              "intro_text": "Set up dbt to notify model owners through email about issues in your deployment environments.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/deploy/model-notifications.md"
+            }
+          ],
+          "tool_call_id": "call_6JsQ3Gc1yL5EBGnSudly4act",
+          "metadata": null,
+          "timestamp": "2026-04-04T07:47:54.727287+00:00",
+          "outcome": "success",
+          "part_kind": "tool-return"
+        }
+      ],
+      "timestamp": "2026-04-04T07:47:54.728821+00:00",
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"docs.getdbt.com-current\" by the full path to the GitHub repository: \"https://github.com/dbt-labs/docs.getdbt.com/blob/current/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request",
+      "run_id": "019d5776-726e-7324-b44f-80f9faff65ed",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "args": "{\"query\":\"dbt model build information tracking\"}",
+          "tool_call_id": "call_8dzCRrgvX0VErvpojAbEBl0J",
+          "id": null,
+          "provider_name": null,
+          "provider_details": null,
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "input_tokens": 2920,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 19,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2026-04-04T07:47:55.228193+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_url": "https://api.openai.com/v1/",
+      "provider_details": {
+        "finish_reason": "tool_calls",
+        "timestamp": "2026-04-04T07:47:53+00:00"
+      },
+      "provider_response_id": "chatcmpl-DQq1RHyKt0r58zMJlHOdvo45GKkLn",
+      "finish_reason": "tool_call",
+      "run_id": "019d5776-726e-7324-b44f-80f9faff65ed",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "content": [
+            {
+              "start": 0,
+              "chunk": "Configure dbt to send email notifications to model owners about issues in deployment [environments](/docs/dbt-cloud-environments#types-of-environments) as soon as they happen &mdash; while the job is still running. Model owners can specify which statuses to receive notifications about:\n\n- **Success** and **Fails** for models\n- **Warning**, **Success**, and **Fails** for tests\n\nWith model-level notifications, model owners can be the first ones to know about issues before anyone else (like the stakeholders). \n\nTo be timely and keep the number of notifications to a reasonable amount when multiple models or tests trigger them, dbt observes the following guidelines when notifying the owners:  \n\n- Send a notification to each unique owner/email during a job run about any models (with status of failure/success) or tests (with status of warning/failure/success). Each owner receives only one notification, the initial one.\n- No notifications sent about subsequent models or tests while a dbt job is still running.\n- Each owner/user who subscribes to notifications for one or more statuses (like failure, success, warning) will receive only _one_ email notification at the end of the job run.\n- The email includes a consolidated list of all models or tests that match the statuses the user subscribed to, instead of sending separate emails for each status.\n\nCreate configuration YAML files in your project for dbt to send notifications about the status of your models and tests in your deployment environments.\n\n## Prerequisites\n- Your <Constant name=\"dbt\" /> administrator has [enabled the appropriate account setting](#enable-access-to-model-notifications) for you.\n- Your deployment environment(s) must be on a [release track](/docs/dbt-versions/cloud-release-tracks) instead of a legacy <Constant name=\"core\" /> version.\n\n## Configure groups\n\nDefine your [groups](/docs/build/groups) in any `.yml` file in your [models directory](/reference/project-configs/model-paths). Each group's owner can ",
+              "title": "Model notifications",
+              "description": "While a job is running, receive email notifications in real time about any issues with your models and tests. ",
+              "intro_text": "Set up dbt to notify model owners through email about issues in your deployment environments.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/deploy/model-notifications.md"
+            },
+            {
+              "start": 4000,
+              "chunk": "\nname: \"jaffle_shop\"\n\n[...]\n\nmodels:\n  jaffle_shop:\n    staging:\n      +group: data_engineering\n    marts:\n      sales:\n        +group: finance\n      campaigns:\n        +group: marketing\n    \n```\n\n</File>\nAttaching a group to a model also encompasses its tests, so you will also receive notifications for a model's test failures. \n\n## Enable access to model notifications \n\nProvide <Constant name=\"dbt\" /> account members the ability to configure and receive alerts about issues with models or tests that are encountered during job runs.  \n\nTo use model-level notifications, your <Constant name=\"dbt\" /> account must have access to the feature. Ask your <Constant name=\"dbt\" /> administrator to enable this feature for account members by following these steps:\n\n1. Navigate to **Notification settings** from your profile name in the sidebar (lower left-hand side). \n2. From **Email notifications**, enable the setting **Enable group/owner notifications on models** under the **Model notifications** section. Then, specify which statuses to receive notifications about (Success, Warning, and/or Fails). \n3. Click **Save**.\n\n  <Lightbox src=\"/img/docs/dbt-cloud/example-enable-model-notifications.png\" title=\"Example of the setting Enable group/owner notifications on models\" />",
+              "title": "Model notifications",
+              "description": "While a job is running, receive email notifications in real time about any issues with your models and tests. ",
+              "intro_text": "Set up dbt to notify model owners through email about issues in your deployment environments.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/deploy/model-notifications.md"
+            },
+            {
+              "start": 3000,
+              "chunk": "values. \n\nAdditional arbitrary fields (such as `favorite_food`) are deprecated and will no longer be allowed in a future release.\n\nTo store additional metadata (like Slack channels, team info, or custom attributes), use `config.meta` instead.\n:::\n\n## Attach groups to models\n\nAttach groups to models as you would any other config, in either the `dbt_project.yml` or `whatever.yml` files. For example: \n\n<File name='models/marts.yml'>\n\n```yml\n\nmodels:\n  - name: sales\n    description: \"Sales data model\"\n    config:\n      group: finance\n\n  - name: campaigns\n    description: \"Campaigns data model\"\n    config:\n      group: marketing\n\n```\n</File>\n\nBy assigning groups in the `dbt_project.yml` file, you can capture all models in a subdirectory at once. \n\nIn this example, model notifications related to staging models go to the data engineering group, `marts/sales` models to the finance team, and `marts/campaigns` models to the marketing team.\n\n<File name='dbt_project.yml'>\n\n```yml\nconfig-version: 2\nname: \"jaffle_shop\"\n\n[...]\n\nmodels:\n  jaffle_shop:\n    staging:\n      +group: data_engineering\n    marts:\n      sales:\n        +group: finance\n      campaigns:\n        +group: marketing\n    \n```\n\n</File>\nAttaching a group to a model also encompasses its tests, so you will also receive notifications for a model's test failures. \n\n## Enable access to model notifications \n\nProvide <Constant name=\"dbt\" /> account members the ability to configure and receive alerts about issues with models or tests that are encountered during job runs.  \n\nTo use model-level notifications, your <Constant name=\"dbt\" /> account must have access to the feature. Ask your <Constant name=\"dbt\" /> administrator to enable this feature for account members by following these steps:\n\n1. Navigate to **Notification settings** from your profile name in the sidebar (lower left-hand side). \n2. From **Email notifications**, enable the setting **Enable group/owner notifications on models** under the **Model notifications** s",
+              "title": "Model notifications",
+              "description": "While a job is running, receive email notifications in real time about any issues with your models and tests. ",
+              "intro_text": "Set up dbt to notify model owners through email about issues in your deployment environments.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/deploy/model-notifications.md"
+            },
+            {
+              "start": 1000,
+              "chunk": "s still running.\n- Each owner/user who subscribes to notifications for one or more statuses (like failure, success, warning) will receive only _one_ email notification at the end of the job run.\n- The email includes a consolidated list of all models or tests that match the statuses the user subscribed to, instead of sending separate emails for each status.\n\nCreate configuration YAML files in your project for dbt to send notifications about the status of your models and tests in your deployment environments.\n\n## Prerequisites\n- Your <Constant name=\"dbt\" /> administrator has [enabled the appropriate account setting](#enable-access-to-model-notifications) for you.\n- Your deployment environment(s) must be on a [release track](/docs/dbt-versions/cloud-release-tracks) instead of a legacy <Constant name=\"core\" /> version.\n\n## Configure groups\n\nDefine your [groups](/docs/build/groups) in any `.yml` file in your [models directory](/reference/project-configs/model-paths). Each group's owner can now specify one or multiple email addresses to receive model-level notifications.\n\nThe `email` field supports a single email address as a string or a list of multiple email addresses.\n\nThe following example shows how to define groups in a `groups.yml` file.\n\n<File name='models/groups.yml'>\n\n```yml\n\ngroups:\n  - name: finance\n    owner:\n      # Email is required to receive model-level notifications, additional properties are also allowed.\n      name: \"Finance team\"\n      email: finance@dbtlabs.com\n\n  - name: marketing\n    owner:\n      name: \"Marketing team\"\n      email: marketing@dbtlabs.com\n    config:\n      meta:\n        slack: '#marketing-team'\n\n# Example of multiple emails supported\n  - name: documentation team\n    owner:\n      name: \"Docs team\"\n      email: \n        - docs@dbtlabs.com\n        - community@dbtlabs.com\n        - product@dbtlabs.com\n    config:\n      meta:\n        slack: '#docs-fox'\n\n```\n\n</File>\n\n:::tip\nThe `owner` field supports `name` and `email`, which are required ",
+              "title": "Model notifications",
+              "description": "While a job is running, receive email notifications in real time about any issues with your models and tests. ",
+              "intro_text": "Set up dbt to notify model owners through email about issues in your deployment environments.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/deploy/model-notifications.md"
+            },
+            {
+              "start": 2000,
+              "chunk": "now specify one or multiple email addresses to receive model-level notifications.\n\nThe `email` field supports a single email address as a string or a list of multiple email addresses.\n\nThe following example shows how to define groups in a `groups.yml` file.\n\n<File name='models/groups.yml'>\n\n```yml\n\ngroups:\n  - name: finance\n    owner:\n      # Email is required to receive model-level notifications, additional properties are also allowed.\n      name: \"Finance team\"\n      email: finance@dbtlabs.com\n\n  - name: marketing\n    owner:\n      name: \"Marketing team\"\n      email: marketing@dbtlabs.com\n    config:\n      meta:\n        slack: '#marketing-team'\n\n# Example of multiple emails supported\n  - name: documentation team\n    owner:\n      name: \"Docs team\"\n      email: \n        - docs@dbtlabs.com\n        - community@dbtlabs.com\n        - product@dbtlabs.com\n    config:\n      meta:\n        slack: '#docs-fox'\n\n```\n\n</File>\n\n:::tip\nThe `owner` field supports `name` and `email`, which are required values. \n\nAdditional arbitrary fields (such as `favorite_food`) are deprecated and will no longer be allowed in a future release.\n\nTo store additional metadata (like Slack channels, team info, or custom attributes), use `config.meta` instead.\n:::\n\n## Attach groups to models\n\nAttach groups to models as you would any other config, in either the `dbt_project.yml` or `whatever.yml` files. For example: \n\n<File name='models/marts.yml'>\n\n```yml\n\nmodels:\n  - name: sales\n    description: \"Sales data model\"\n    config:\n      group: finance\n\n  - name: campaigns\n    description: \"Campaigns data model\"\n    config:\n      group: marketing\n\n```\n</File>\n\nBy assigning groups in the `dbt_project.yml` file, you can capture all models in a subdirectory at once. \n\nIn this example, model notifications related to staging models go to the data engineering group, `marts/sales` models to the finance team, and `marts/campaigns` models to the marketing team.\n\n<File name='dbt_project.yml'>\n\n```yml\nconfig-version: 2",
+              "title": "Model notifications",
+              "description": "While a job is running, receive email notifications in real time about any issues with your models and tests. ",
+              "intro_text": "Set up dbt to notify model owners through email about issues in your deployment environments.",
+              "filename": "docs.getdbt.com-current/website/docs/docs/deploy/model-notifications.md"
+            }
+          ],
+          "tool_call_id": "call_8dzCRrgvX0VErvpojAbEBl0J",
+          "metadata": null,
+          "timestamp": "2026-04-04T07:47:55.249452+00:00",
+          "outcome": "success",
+          "part_kind": "tool-return"
+        }
+      ],
+      "timestamp": "2026-04-04T07:47:55.251204+00:00",
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"docs.getdbt.com-current\" by the full path to the GitHub repository: \"https://github.com/dbt-labs/docs.getdbt.com/blob/current/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request",
+      "run_id": "019d5776-726e-7324-b44f-80f9faff65ed",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "content": "In dbt (data build tool), the information tracked about each model build typically includes:\n\n1. **Status Notifications**: dbt can send email notifications to model owners about the status of model builds in real time. Users can specify which statuses to receive notifications for:\n   - **Success** and **Fails** for models.\n   - **Warning**, **Success**, and **Fails** for tests.\n\n2. **Consolidated Notifications**: To reduce notification spamming during a job run, dbt consolidates notifications such that each owner receives only one email that lists all models or tests matching the statuses they subscribed to.\n\n3. **Group Tracking**: Users can define groups in their `YAML` configuration files. Each group's owner can specify email addresses to receive notifications regarding model failures, making it easier to manage and track issues across multiple models.\n\n4. **Metadata**: Additional metadata can be stored for each model using the `config.meta` configuration option. This can include Slack channels or other custom attributes that help stakeholders and team members communicate about model statuses.\n\n5. **Model Configurations**: The configuration can include a description of each model and link it to specific groups (e.g., finance or marketing), allowing for organized notifications and alert management.\n\nFor more information, you can check the details on how to set up and manage notifications: [Model notifications](https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/docs/docs/deploy/model-notifications.md).",
+          "id": null,
+          "provider_name": null,
+          "provider_details": null,
+          "part_kind": "text"
+        }
+      ],
+      "usage": {
+        "input_tokens": 5609,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 2816,
+        "output_tokens": 303,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2026-04-04T07:48:02.018412+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_url": "https://api.openai.com/v1/",
+      "provider_details": {
+        "finish_reason": "stop",
+        "timestamp": "2026-04-04T07:47:55+00:00"
+      },
+      "provider_response_id": "chatcmpl-DQq1Tusuvc61lOgUAn78LxFBj5iKK",
+      "finish_reason": "stop",
+      "run_id": "019d5776-726e-7324-b44f-80f9faff65ed",
+      "metadata": null
+    }
+  ],
+  "source": "ai-generated"
+}

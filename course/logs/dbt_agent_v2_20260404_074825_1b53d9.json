@@ -1,0 +1,174 @@
+{
+  "agent_name": "dbt_agent_v2",
+  "system_prompt": [
+    "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"docs.getdbt.com-current\" by the full path to the GitHub repository: \"https://github.com/dbt-labs/docs.getdbt.com/blob/current/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance."
+  ],
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "tools": [
+    "text_search"
+  ],
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "What are the three main materializations in DBT that cover most analytics engineering needs?",
+          "timestamp": "2026-04-04T07:48:14.155874+00:00",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "timestamp": "2026-04-04T07:48:14.156473+00:00",
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"docs.getdbt.com-current\" by the full path to the GitHub repository: \"https://github.com/dbt-labs/docs.getdbt.com/blob/current/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request",
+      "run_id": "019d5776-c2c9-722b-956f-323e5dad8e0c",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "args": "{\"query\":\"main materializations in DBT\"}",
+          "tool_call_id": "call_9BPesQBSYGo4wjeoFlbeiyrO",
+          "id": null,
+          "provider_name": null,
+          "provider_details": null,
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "input_tokens": 237,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 19,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2026-04-04T07:48:16.258742+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_url": "https://api.openai.com/v1/",
+      "provider_details": {
+        "finish_reason": "tool_calls",
+        "timestamp": "2026-04-04T07:48:13+00:00"
+      },
+      "provider_response_id": "chatcmpl-DQq1ldN3Lz21HvKVfemdvHkISef3l",
+      "finish_reason": "tool_call",
+      "run_id": "019d5776-c2c9-722b-956f-323e5dad8e0c",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "content": [
+            {
+              "start": 0,
+              "chunk": "## Overview\n<Term id=\"materialization\">Materializations</Term> are strategies for persisting dbt models in a warehouse. There are five types of materializations built into dbt. They are:\n\n- <Term id=\"table\" />\n- <Term id=\"view\" />\n- incremental\n- ephemeral\n- materialized view\n\nYou can also configure [custom materializations](/guides/create-new-materializations?step=1) in dbt. Custom materializations are a powerful way to extend dbt's functionality to meet your specific needs. \n\nFor a detailed guide on materializations, refer to [Materializations best practices](/best-practices/materializations/1-guide-overview). For information about data streaming, refer to [How to handle real-time data](/best-practices/how-we-handle-real-time-data/1-intro).\n\n\nimport CourseCallout from '/snippets/_materialization-video-callout.md';\n\n<CourseCallout resource=\"Materializations\" \nurl=\"https://learn.getdbt.com/courses/materializations-fundamentals\" \ncourse=\"Materializations fundamentals\" \n/>\n\n## Configuring materializations\nBy default, dbt models are materialized as \"views\". Models can be configured with a different materialization by supplying the [`materialized` configuration](/reference/resource-configs/materialized) parameter as shown in the following tabs.\n\n<Tabs>\n\n<TabItem value=\"Project file\">\n\n<File name='dbt_project.yml'>\n\n```yaml\n# The following dbt_project.yml configures a project that looks like this:\n# .\n# \u2514\u2500\u2500 models\n#     \u251c\u2500\u2500 csvs\n#     \u2502\u00a0\u00a0 \u251c\u2500\u2500 employees.sql\n#     \u2502\u00a0\u00a0 \u2514\u2500\u2500 goals.sql\n#     \u2514\u2500\u2500 events\n#         \u251c\u2500\u2500 stg_event_log.sql\n#         \u2514\u2500\u2500 stg_event_sessions.sql\n\nname: my_project\nversion: 1.0.0\nconfig-version: 2\n\nmodels:\n  my_project:\n    events:\n      # materialize all models in models/events as tables\n      +materialized: table\n    csvs:\n      # this is redundant, and does not need to be set\n      +materialized: view\n```\n\n</File>\n\n</TabItem>\n\n<TabItem value=\"Model file\">\n\nAlternatively, materializations can be configured directly inside of the model SQL files. This c",
+              "title": "Materializations",
+              "description": "Configure materializations in dbt to control how the SQL is run and resulting data is stored.",
+              "id": "materializations",
+              "pagination_next": "docs/build/incremental-models",
+              "filename": "docs.getdbt.com-current/website/docs/docs/build/materializations.md"
+            },
+            {
+              "start": 1000,
+              "chunk": "g materializations\nBy default, dbt models are materialized as \"views\". Models can be configured with a different materialization by supplying the [`materialized` configuration](/reference/resource-configs/materialized) parameter as shown in the following tabs.\n\n<Tabs>\n\n<TabItem value=\"Project file\">\n\n<File name='dbt_project.yml'>\n\n```yaml\n# The following dbt_project.yml configures a project that looks like this:\n# .\n# \u2514\u2500\u2500 models\n#     \u251c\u2500\u2500 csvs\n#     \u2502\u00a0\u00a0 \u251c\u2500\u2500 employees.sql\n#     \u2502\u00a0\u00a0 \u2514\u2500\u2500 goals.sql\n#     \u2514\u2500\u2500 events\n#         \u251c\u2500\u2500 stg_event_log.sql\n#         \u2514\u2500\u2500 stg_event_sessions.sql\n\nname: my_project\nversion: 1.0.0\nconfig-version: 2\n\nmodels:\n  my_project:\n    events:\n      # materialize all models in models/events as tables\n      +materialized: table\n    csvs:\n      # this is redundant, and does not need to be set\n      +materialized: view\n```\n\n</File>\n\n</TabItem>\n\n<TabItem value=\"Model file\">\n\nAlternatively, materializations can be configured directly inside of the model SQL files. This can be useful if you are also setting [Performance Optimization] configs for specific models (for example, [Redshift specific configurations](/reference/resource-configs/redshift-configs) or [BigQuery specific configurations](/reference/resource-configs/bigquery-configs)).\n\n<File name='models/events/stg_event_log.sql'>\n\n```sql\n\n{{ config(materialized='table', sort='timestamp', dist='user_id') }}\n\nselect *\nfrom ...\n```\n\n</File>\n\n</TabItem>\n\n<TabItem value=\"Property file\">\n\nMaterializations can also be configured in the model's `properties.yml` file.  The following example shows the `table` materialization type. For a complete list of materialization types, refer to [materializations](/docs/build/materializations#materializations).\n\n<File name='models/properties.yml'>\n\n```yaml\n\nmodels:\n  - name: events\n    config:\n      materialized: table\n```\n\n</File>\n\n</TabItem>\n\n</Tabs>\n\n## Materializations\n\n\n### View\nWhen using the `view` materialization, your model is rebuilt as a view on each run, v",
+              "title": "Materializations",
+              "description": "Configure materializations in dbt to control how the SQL is run and resulting data is stored.",
+              "id": "materializations",
+              "pagination_next": "docs/build/incremental-models",
+              "filename": "docs.getdbt.com-current/website/docs/docs/build/materializations.md"
+            },
+            {
+              "start": 2000,
+              "chunk": "an be useful if you are also setting [Performance Optimization] configs for specific models (for example, [Redshift specific configurations](/reference/resource-configs/redshift-configs) or [BigQuery specific configurations](/reference/resource-configs/bigquery-configs)).\n\n<File name='models/events/stg_event_log.sql'>\n\n```sql\n\n{{ config(materialized='table', sort='timestamp', dist='user_id') }}\n\nselect *\nfrom ...\n```\n\n</File>\n\n</TabItem>\n\n<TabItem value=\"Property file\">\n\nMaterializations can also be configured in the model's `properties.yml` file.  The following example shows the `table` materialization type. For a complete list of materialization types, refer to [materializations](/docs/build/materializations#materializations).\n\n<File name='models/properties.yml'>\n\n```yaml\n\nmodels:\n  - name: events\n    config:\n      materialized: table\n```\n\n</File>\n\n</TabItem>\n\n</Tabs>\n\n## Materializations\n\n\n### View\nWhen using the `view` materialization, your model is rebuilt as a view on each run, via a `create view as` statement.\n- **Pros:** No additional data is stored, views on top of source data will always have the latest records in them.\n- **Cons:** Views that perform a significant transformation, or are stacked on top of other views, are slow to query.\n- **Advice:**\n    - Generally start with views for your models, and only change to another materialization when you notice performance problems.\n    - Views are best suited for models that do not do significant transformation, for example, renaming, or recasting columns.\n\n### Table\nWhen using the `table` materialization, your model is rebuilt as a <Term id=\"table\" /> on each run, via a `create table as` statement.\n- **Pros:** Tables are fast to query\n- **Cons:**\n    - Tables can take a long time to rebuild, especially for complex transformations\n    - New records in underlying source data are not automatically added to the table\n- **Advice:**\n  - Use the table materialization for any models being queried by BI tools, to give",
+              "title": "Materializations",
+              "description": "Configure materializations in dbt to control how the SQL is run and resulting data is stored.",
+              "id": "materializations",
+              "pagination_next": "docs/build/incremental-models",
+              "filename": "docs.getdbt.com-current/website/docs/docs/build/materializations.md"
+            },
+            {
+              "start": 0,
+              "chunk": "import Tabs from '@theme/Tabs';\nimport TabItem from '@theme/TabItem';\n\n## Configuring materializations\n\nChoosing which materialization is as simple as setting any other configuration in dbt. We\u2019ll look first at how we select our materializations for individual models, then at more powerful ways of setting materializations for entire folders of models.\n\n### Configuring tables and views\n\nLet\u2019s look at how we can use tables and views to get started with materializations:\n\n- \u2699\ufe0f\u00a0We can configure an individual model\u2019s materialization using a **Jinja `config` block**, and passing in the **`materialized` argument**. This tells dbt what materialization to use.\n- \ud83d\udeb0\u00a0The underlying specifics of what is run depends on [which **adapter** you\u2019re using](/docs/supported-data-platforms), but the end results will be equivalent.\n- \ud83d\ude0c\u00a0This is one of the many valuable aspects of dbt: it lets us use a **declarative** approach, specifying the _outcome_ that we want in our code, rather than _specific steps_ to achieve it (the latter is an _imperative_ approach if you want to get computer science-y about it \ud83e\udd13).\n- \ud83d\udd0d\u00a0In the below case, we want to create a SQL **view**, and can **declare** that in a **single line of code**. Note that python models [do not support materializing as views](/docs/build/materializations#python-materializations) at this time.\n\n```sql\n    {{\n        config(\n            materialized='view'\n        )\n    }}\n\n    select ...\n```\n\n\n:::info\n\ud83d\udc0d **Not all adapters support python yet**, check the [docs here to be sure](/docs/build/python-models#specific-data-platforms) before spending time writing python models.\n:::\n\n- Configuring a model to materialize as a `table` is simple, and possible for both SQL and python models.\n\n<Tabs>\n<TabItem value=\"sql\" label=\"SQL\">\n\n```sql\n{{\n    config(\n        materialized='table'\n    )\n}}\n\nselect ...\n```\n\n</TabItem>\n<TabItem value=\"python\" label=\"Python\">\n\n```python\ndef model(dbt, session):\n\n    dbt.config(materialized=\"table\")\n\n    # model logi",
+              "title": "Configuring materializations",
+              "id": "materializations-guide-3-configuring-materializations",
+              "slug": "3-configuring-materializations",
+              "description": "Read this guide to understand how to configure materializations in dbt.",
+              "displayText": "Materializations best practices",
+              "hoverSnippet": "Read this guide to understand how to configure materializations in dbt.",
+              "filename": "docs.getdbt.com-current/website/docs/best-practices/materializations/materializations-guide-3-configuring-materializations.md"
+            },
+            {
+              "start": 8000,
+              "chunk": "nly needed if there is the potential for a change in configuration or sql;\nit's effectively a deploy action.\nBy contrast, a `dbt run` command is needed for a table in the same scenarios *AND when the data in the table needs to be updated*.\nThis also holds true for incremental and snapshot models, whose underlying relations are tables.\nIn the table cases, the scheduling mechanism is either <Constant name=\"dbt\" /> or your local scheduler;\nthere is no built-in functionality to automatically refresh the data behind a table.\nHowever, most platforms (Postgres excluded) provide functionality to configure automatically refreshing a materialized view.\nHence, materialized views work similarly to incremental models with the benefit of not needing to run dbt to refresh the data.\nThis assumes, of course, that auto refresh is turned on and configured in the model.\n\n:::info\n`dbt-snowflake` _does not_ support materialized views, it uses Dynamic Tables instead. For details, refer to [Snowflake specific configurations](/reference/resource-configs/snowflake-configs#dynamic-tables).\n:::\n\n## Python materializations\n\nPython models support two materializations:\n- `table`\n- `incremental`\n\nIncremental Python models support all the same [incremental strategies](/docs/build/incremental-strategy) as their SQL counterparts. The specific strategies supported depend on your adapter.\n\nPython models can't be materialized as `view` or `ephemeral`. Python isn't supported for non-model resource types (like tests and snapshots).\n\nFor incremental models, like SQL models, you will need to filter incoming tables to only new rows of data:\n\n<WHCode>\n\n<div warehouse=\"Snowpark\">\n\n<File name='models/my_python_model.py'>\n\n```python\nimport snowflake.snowpark.functions as F\n\ndef model(dbt, session):\n    dbt.config(materialized = \"incremental\")\n    df = dbt.ref(\"upstream_table\")\n\n    if dbt.is_incremental:\n\n        # only new rows compared to max in current table\n        max_from_this = f\"select max(updated_at) fr",
+              "title": "Materializations",
+              "description": "Configure materializations in dbt to control how the SQL is run and resulting data is stored.",
+              "id": "materializations",
+              "pagination_next": "docs/build/incremental-models",
+              "filename": "docs.getdbt.com-current/website/docs/docs/build/materializations.md"
+            }
+          ],
+          "tool_call_id": "call_9BPesQBSYGo4wjeoFlbeiyrO",
+          "metadata": null,
+          "timestamp": "2026-04-04T07:48:16.274034+00:00",
+          "outcome": "success",
+          "part_kind": "tool-return"
+        }
+      ],
+      "timestamp": "2026-04-04T07:48:16.275184+00:00",
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"docs.getdbt.com-current\" by the full path to the GitHub repository: \"https://github.com/dbt-labs/docs.getdbt.com/blob/current/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request",
+      "run_id": "019d5776-c2c9-722b-956f-323e5dad8e0c",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "content": "The three main materializations in dbt that cover most analytics engineering needs are:\n\n1. **View**: Models are rebuilt as views during each run. This materialization type is beneficial when you want to ensure that your queries always reflect the latest data from the source tables. However, views can be slow to query if they involve significant transformations or are built on top of other views.\n\n2. **Table**: Models are rebuilt as physical tables. This materialization type is ideal for scenarios where performance is critical, as tables are generally faster to query than views. However, they can take longer to rebuild and do not automatically refresh with new data unless rerun.\n\n3. **Incremental**: This materialization allows for updating only the new or changed data instead of rebuilding the entire dataset. It is particularly useful for large datasets where complete rebuilds would be inefficient.\n\nFor more details, you can refer to the [Materializations Guide](https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/docs/docs/build/materializations.md) in the dbt documentation.",
+          "id": null,
+          "provider_name": null,
+          "provider_details": null,
+          "part_kind": "text"
+        }
+      ],
+      "usage": {
+        "input_tokens": 3231,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 219,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2026-04-04T07:48:25.085194+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_url": "https://api.openai.com/v1/",
+      "provider_details": {
+        "finish_reason": "stop",
+        "timestamp": "2026-04-04T07:48:15+00:00"
+      },
+      "provider_response_id": "chatcmpl-DQq1nuGtYPE8NcFu3YjIJwmzbBCoN",
+      "finish_reason": "stop",
+      "run_id": "019d5776-c2c9-722b-956f-323e5dad8e0c",
+      "metadata": null
+    }
+  ],
+  "source": "ai-generated"
+}

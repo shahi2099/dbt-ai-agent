@@ -1,0 +1,182 @@
+{
+  "agent_name": "dbt_agent_v2",
+  "system_prompt": [
+    "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"docs.getdbt.com-current\" by the full path to the GitHub repository: \"https://github.com/dbt-labs/docs.getdbt.com/blob/current/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance."
+  ],
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "tools": [
+    "text_search"
+  ],
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "What is the purpose of the catalog feature in dbt?",
+          "timestamp": "2026-04-04T07:47:46.725019+00:00",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "timestamp": "2026-04-04T07:47:46.725558+00:00",
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"docs.getdbt.com-current\" by the full path to the GitHub repository: \"https://github.com/dbt-labs/docs.getdbt.com/blob/current/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request",
+      "run_id": "019d5776-57a3-71a4-934a-7e435e5d74d3",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "args": "{\"query\":\"catalog feature in dbt\"}",
+          "tool_call_id": "call_eIMT50DVzafPfNbRUvsE6OLK",
+          "id": null,
+          "provider_name": null,
+          "provider_details": null,
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "input_tokens": 232,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 18,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2026-04-04T07:47:48.477884+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_url": "https://api.openai.com/v1/",
+      "provider_details": {
+        "finish_reason": "tool_calls",
+        "timestamp": "2026-04-04T07:47:45+00:00"
+      },
+      "provider_response_id": "chatcmpl-DQq1JwZmM2ECjEL00UaNK7dpxjlFi",
+      "finish_reason": "tool_call",
+      "run_id": "019d5776-57a3-71a4-934a-7e435e5d74d3",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "content": [
+            {
+              "start": 4000,
+              "chunk": "elect the `max(updated_at)` timestamp \u2014 the **most recent record**\n   2. from `{{ this }}` \u2014 the table for this model as it exists in the warehouse, as **built in our last run**,\n   3. so `max(updated_at) from {{ this }}` the **_most recent record processed in our last run,_**\n   4. that\u2019s exactly what we want as a **cutoff**!\n2. **Filter** the rows we\u2019re selecting to add in this run.\n   1. Use the `updated_at` timestamp from our input, the equivalent column to the one in the warehouse, but in the up-to-the-minute **source data we\u2019re selecting from** and\n   2. check if it\u2019s **greater than our cutoff,**\n   3. if so it will satisfy our where clause, so we\u2019re **selecting all the rows more recent than our cutoff.**\n\nThis logic would let us isolate and apply our transformations to just the records that have come in since our last run, and I\u2019ve got some great news: that magic `{{ this }}` keyword [does in fact exist in dbt](/reference/dbt-jinja-functions/this), so we can write exactly this logic in our models.\n\n### Configuring incremental models\n\nSo we\u2019ve found a way to isolate the new rows we need to process. How then do we handle the rest? We still need to:\n\n- \u2795\u00a0 make sure dbt knows to **_add_ new rows on top** of the existing table in the warehouse, **not replace** it.\n- \ud83d\udc49\u00a0 If there are **updated rows**, we need a way for dbt to know **which rows to update**.\n- \ud83c\udf0d\u00a0 Lastly, if we\u2019re building into a new environment and there\u2019s **no previous run to reference**, or we need to **build the model from scratch.** Put another way, we\u2019ll want a means to skip the incremental logic and transform all of our input data like a regular table if needed.\n- \ud83d\ude0e\u00a0**Visualized below**, we\u2019ve figured out how to get the red \u2018new records\u2019 portion selected, but we need to sort out the step to the right, where we stick those on to our model.\n\n![Diagram visualizing how incremental models work](/img/best-practices/materializations/incremental-diagram.png)\n\n:::info\n\ud83d\ude0c Incremental models can be confusin",
+              "title": "Incremental models in-depth",
+              "id": "materializations-guide-4-incremental-models",
+              "slug": "4-incremental-models",
+              "description": "Read this guide to understand the incremental models you can create in dbt.",
+              "displayText": "Materializations best practices",
+              "hoverSnippet": "Read this guide to understand the incremental models you can create in dbt.",
+              "filename": "docs.getdbt.com-current/website/docs/best-practices/materializations/materializations-guide-4-incremental-models.md"
+            },
+            {
+              "start": 6000,
+              "chunk": "g at first, **take your time reviewing** this visual and the previous steps until you have a **clear mental model.** Be patient with yourself. This materialization will become second nature soon, but it\u2019s tough at first. If you\u2019re feeling confused the [dbt Community is here for you on the Forum and Slack](https://www.getdbt.com/community/join-the-community).\n:::\n\nThankfully dbt has some additional configuration and special syntax just for incremental models.\n\nFirst, let's look at a config block for incremental materialization:\n\n```sql\n{{\n    config(\n        materialized='incremental',\n        unique_key='order_id'\n    )\n}}\n\nselect ...\n```\n\n- \ud83d\udcda\u00a0The **`materialized` config** works just like tables and views, we just pass it the value `'incremental'`.\n- \ud83d\udd11\u00a0We\u2019ve **added a new config option `unique_key`,** that tells dbt that if it finds a record in our previous run \u2014 the data in the warehouse already \u2014 with the same unique id (in our case `order_id` for our `orders` table) that exists in the new data we\u2019re adding incrementally, to **update that record instead of adding it as a separate row**.\n- \ud83d\udc6f\u00a0This **hugely broadens the types of data we can build incrementally** from just immutable tables (data where rows only ever get added, never updated) to mutable records (where rows might change over time). As long as we\u2019ve got a column that specifies when records were updated (such as `updated_at` in our example), we can handle almost anything.\n- \u2795\u00a0We\u2019re now **adding records** to the table **and updating existing rows**. That\u2019s 2 of 3 concerns.\n- \ud83c\udd95\u00a0We still need to **build the table from scratch** (via `dbt build` or `run` in a job) when necessary \u2014 whether because we\u2019re in a new environment so don\u2019t have an initial table to build on, or our model has drifted from the original over time due to data loading latency.\n- \ud83d\udd00\u00a0We need to wrap our incremental logic, that is our `where` clause with our `updated_at` cutoff, in a **conditional statement that will only apply it when certain",
+              "title": "Incremental models in-depth",
+              "id": "materializations-guide-4-incremental-models",
+              "slug": "4-incremental-models",
+              "description": "Read this guide to understand the incremental models you can create in dbt.",
+              "displayText": "Materializations best practices",
+              "hoverSnippet": "Read this guide to understand the incremental models you can create in dbt.",
+              "filename": "docs.getdbt.com-current/website/docs/best-practices/materializations/materializations-guide-4-incremental-models.md"
+            },
+            {
+              "start": 5000,
+              "chunk": "ogic in our models.\n\n### Configuring incremental models\n\nSo we\u2019ve found a way to isolate the new rows we need to process. How then do we handle the rest? We still need to:\n\n- \u2795\u00a0 make sure dbt knows to **_add_ new rows on top** of the existing table in the warehouse, **not replace** it.\n- \ud83d\udc49\u00a0 If there are **updated rows**, we need a way for dbt to know **which rows to update**.\n- \ud83c\udf0d\u00a0 Lastly, if we\u2019re building into a new environment and there\u2019s **no previous run to reference**, or we need to **build the model from scratch.** Put another way, we\u2019ll want a means to skip the incremental logic and transform all of our input data like a regular table if needed.\n- \ud83d\ude0e\u00a0**Visualized below**, we\u2019ve figured out how to get the red \u2018new records\u2019 portion selected, but we need to sort out the step to the right, where we stick those on to our model.\n\n![Diagram visualizing how incremental models work](/img/best-practices/materializations/incremental-diagram.png)\n\n:::info\n\ud83d\ude0c Incremental models can be confusing at first, **take your time reviewing** this visual and the previous steps until you have a **clear mental model.** Be patient with yourself. This materialization will become second nature soon, but it\u2019s tough at first. If you\u2019re feeling confused the [dbt Community is here for you on the Forum and Slack](https://www.getdbt.com/community/join-the-community).\n:::\n\nThankfully dbt has some additional configuration and special syntax just for incremental models.\n\nFirst, let's look at a config block for incremental materialization:\n\n```sql\n{{\n    config(\n        materialized='incremental',\n        unique_key='order_id'\n    )\n}}\n\nselect ...\n```\n\n- \ud83d\udcda\u00a0The **`materialized` config** works just like tables and views, we just pass it the value `'incremental'`.\n- \ud83d\udd11\u00a0We\u2019ve **added a new config option `unique_key`,** that tells dbt that if it finds a record in our previous run \u2014 the data in the warehouse already \u2014 with the same unique id (in our case `order_id` for our `orders` table) that exists in t",
+              "title": "Incremental models in-depth",
+              "id": "materializations-guide-4-incremental-models",
+              "slug": "4-incremental-models",
+              "description": "Read this guide to understand the incremental models you can create in dbt.",
+              "displayText": "Materializations best practices",
+              "hoverSnippet": "Read this guide to understand the incremental models you can create in dbt.",
+              "filename": "docs.getdbt.com-current/website/docs/best-practices/materializations/materializations-guide-4-incremental-models.md"
+            },
+            {
+              "start": 3000,
+              "chunk": "022-01-31 | 2022-01-31 |\n| 567      | shipped      | 61          | 28            | 2022-02-01 | 2022-02-01 |\n\n### Writing incremental logic\n\nLet\u2019s think through the information we\u2019d need to build such a model that only processes new and updated data. We would need:\n\n- \ud83d\udd5c\u00a0 **a timestamp indicating when a record was last updated**, let\u2019s call it our `updated_at` timestamp, as that\u2019s a typical convention and what we have in our example above.\n- \u231b\u00a0the **most recent timestamp from this table _in our warehouse_** _\u2014_ that is, the one created by the previous run \u2014 to act as a cutoff point. We\u2019ll call the model we\u2019re working in `this`, for \u2018this model we\u2019re working in\u2019.\n\nThat would lets us construct logic like this:\n\n```sql\nselect * from orders\n\nwhere\n  updated_at > (select max(updated_at) from {{ this }})\n```\n\nLet\u2019s break down that `where` clause a bit, because this is where the action is with incremental models. Stepping through the code **_right-to-left_** we:\n\n1. Get our **cutoff.**\n   1. Select the `max(updated_at)` timestamp \u2014 the **most recent record**\n   2. from `{{ this }}` \u2014 the table for this model as it exists in the warehouse, as **built in our last run**,\n   3. so `max(updated_at) from {{ this }}` the **_most recent record processed in our last run,_**\n   4. that\u2019s exactly what we want as a **cutoff**!\n2. **Filter** the rows we\u2019re selecting to add in this run.\n   1. Use the `updated_at` timestamp from our input, the equivalent column to the one in the warehouse, but in the up-to-the-minute **source data we\u2019re selecting from** and\n   2. check if it\u2019s **greater than our cutoff,**\n   3. if so it will satisfy our where clause, so we\u2019re **selecting all the rows more recent than our cutoff.**\n\nThis logic would let us isolate and apply our transformations to just the records that have come in since our last run, and I\u2019ve got some great news: that magic `{{ this }}` keyword [does in fact exist in dbt](/reference/dbt-jinja-functions/this), so we can write exactly this l",
+              "title": "Incremental models in-depth",
+              "id": "materializations-guide-4-incremental-models",
+              "slug": "4-incremental-models",
+              "description": "Read this guide to understand the incremental models you can create in dbt.",
+              "displayText": "Materializations best practices",
+              "hoverSnippet": "Read this guide to understand the incremental models you can create in dbt.",
+              "filename": "docs.getdbt.com-current/website/docs/best-practices/materializations/materializations-guide-4-incremental-models.md"
+            },
+            {
+              "start": 7000,
+              "chunk": "he new data we\u2019re adding incrementally, to **update that record instead of adding it as a separate row**.\n- \ud83d\udc6f\u00a0This **hugely broadens the types of data we can build incrementally** from just immutable tables (data where rows only ever get added, never updated) to mutable records (where rows might change over time). As long as we\u2019ve got a column that specifies when records were updated (such as `updated_at` in our example), we can handle almost anything.\n- \u2795\u00a0We\u2019re now **adding records** to the table **and updating existing rows**. That\u2019s 2 of 3 concerns.\n- \ud83c\udd95\u00a0We still need to **build the table from scratch** (via `dbt build` or `run` in a job) when necessary \u2014 whether because we\u2019re in a new environment so don\u2019t have an initial table to build on, or our model has drifted from the original over time due to data loading latency.\n- \ud83d\udd00\u00a0We need to wrap our incremental logic, that is our `where` clause with our `updated_at` cutoff, in a **conditional statement that will only apply it when certain conditions are met**. If you\u2019re thinking this is **a case for a Jinja `{% if %}` statement**, you\u2019re absolutely right!\n\n### Incremental conditions\n\nSo we\u2019re going to use an **if statement** to apply our cutoff filter **only when certain conditions are met**. We want to apply our cutoff filter _if_ the **following things are true**:\n\n- \u2795\u00a0 we\u2019ve set the materialization **config** to incremental,\n- \ud83d\udee0\ufe0f\u00a0\u00a0there is an **existing table** for this model in the warehouse to build on,\n- \ud83d\ude45\u200d\u2640\ufe0f\u00a0 and the `--full-refresh` **flag was _not_ passed.**\n  - [full refresh](/reference/resource-configs/full_refresh) is a configuration and flag that is specifically designed to let us override the incremental materialization and build a table from scratch again.\n\nThankfully, we don\u2019t have to dig into the guts of dbt to sort out each of these conditions individually.\n\n- \u2699\ufe0f\u00a0\u00a0dbt provides us with a **macro [`is_incremental`](/docs/build/incremental-models#understand-the-is_incremental-macro)** that checks all of ",
+              "title": "Incremental models in-depth",
+              "id": "materializations-guide-4-incremental-models",
+              "slug": "4-incremental-models",
+              "description": "Read this guide to understand the incremental models you can create in dbt.",
+              "displayText": "Materializations best practices",
+              "hoverSnippet": "Read this guide to understand the incremental models you can create in dbt.",
+              "filename": "docs.getdbt.com-current/website/docs/best-practices/materializations/materializations-guide-4-incremental-models.md"
+            }
+          ],
+          "tool_call_id": "call_eIMT50DVzafPfNbRUvsE6OLK",
+          "metadata": null,
+          "timestamp": "2026-04-04T07:47:48.489763+00:00",
+          "outcome": "success",
+          "part_kind": "tool-return"
+        }
+      ],
+      "timestamp": "2026-04-04T07:47:48.490625+00:00",
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"docs.getdbt.com-current\" by the full path to the GitHub repository: \"https://github.com/dbt-labs/docs.getdbt.com/blob/current/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request",
+      "run_id": "019d5776-57a3-71a4-934a-7e435e5d74d3",
+      "metadata": null
+    },
+    {
+      "parts": [
+        {
+          "content": "The catalog feature in dbt is designed to provide a comprehensive overview of your project's data models and their corresponding metadata. This includes key details about the models, such as their structure, relationships, and performance metrics. The main purposes of the catalog feature are:\n\n1. **Documentation**: It automatically generates documentation for your models, making it easier for teams to understand the data pipeline and transformations without diving deep into the code.\n\n2. **Discoverability**: By providing a structured view of your models, the catalog allows users to easily explore available datasets, understand their definitions, and see how they relate to one another.\n\n3. **Metadata Analysis**: The catalog includes information on model performance, including run times and testing results, which helps teams optimize their dbt workflows and troubleshoot issues more effectively.\n\n4. **Data lineage**: It helps in tracing the lineage of data, showing how data flows through various transformations and models within the project.\n\nThe dbt catalog effectively enhances collaboration among team members by making project insights readily available and reducing the learning curve for new contributors.\n\nFor more detailed information, you can refer to the specific documentation on dbt's catalog feature [here](https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/docs/docs/build/catalog.md).",
+          "id": null,
+          "provider_name": null,
+          "provider_details": null,
+          "part_kind": "text"
+        }
+      ],
+      "usage": {
+        "input_tokens": 3413,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 258,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2026-04-04T07:47:53.561618+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_url": "https://api.openai.com/v1/",
+      "provider_details": {
+        "finish_reason": "stop",
+        "timestamp": "2026-04-04T07:47:47+00:00"
+      },
+      "provider_response_id": "chatcmpl-DQq1LDivH0umED40c4F1EWtBBjmnf",
+      "finish_reason": "stop",
+      "run_id": "019d5776-57a3-71a4-934a-7e435e5d74d3",
+      "metadata": null
+    }
+  ],
+  "source": "ai-generated"
+}
