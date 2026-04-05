@@ -1,6 +1,11 @@
 # DBT GitHub Conversational AI Agent
 
-A conversational AI agent that answers questions about the Data Build Tool (dbt) GitHub repository using search, Agentic RAG, and LLMs.
+## Overview
+This project builds a conversational AI agent over the official dbt documentation repository:
+
+- https://github.com/dbt-labs/docs.getdbt.com
+
+The agent answers questions about the Data Build Tool (dbt) using search, embeddings, and an Agentic RAG pipeline powered by LLMs.
 
 ## Project Highlights
 - Built a conversational AI agent over a GitHub repository
@@ -135,3 +140,10 @@ Click "deploy", connect your GitHub repo, and configure deployment settings.
 In the settings, make sure you configure OPENAI_API_KEY.
 
 Once configured, Streamlit Cloud will automatically detect changes. It will redeploy your app whenever you push updates.
+
+Here's my app: https://dbt-ai-agent.streamlit.app/
+By the time you read this, it'll probably be disabled. Every time somebody uses it, I have to pay OpenAI. And I don't want that.
+
+## Acknowledgments
+- [Document Build Tool (DBT)](https://github.com/dbt-labs/docs.getdbt.com) for the open documentation source.
+- [AI Agents Crash Course](https://alexeygrigorev.com/aihero/) for the project structure and evaluation approach
