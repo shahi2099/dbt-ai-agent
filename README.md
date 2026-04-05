@@ -12,11 +12,11 @@ A conversational AI agent that answers questions about the Data Build Tool (dbt)
 ## Demo
 Watch the Streamlit interface in action:
 
-![streamlit](./images/streamlit.gif)
+![streamlit](images/streamlit.gif)
 
 Watch the CLI interface in action:
 
-![cli](./images/cli.gif)
+![cli](images/cli.gif)
 
 ## Overview
 This project ingests and indexes the Data Build Tool (dbt) GitHub repository, processes repository code and documentation using AI, and allows users to ask questions about the repository through a conversational interface.
